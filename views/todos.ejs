@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-DOs</title>
+</head>
+<body>
+    <h1>TO-DOs List : </h1><br>
+    <% if (toDoList.length == 0) { %>
+        <h3>The list is empty! Try creating some TO-DOs first!</h3>
+    <% } else { %>
+    <ol>
+        <% toDoList.forEach((element) => { %>
+            <li><%= element %></li>
+        <% }); %>
+    </ol>
+    <% } %>
+    <br>
+    <form id="todoForm" method="post">
+        <input type="text" id="todo_text" required/>
+        <input type="submit" id="todo_add" onclick=addToDo value="Add"/>
+        <br>
+    </form>
+    <br>
+    <form id="todoDeleteForm" method="post">
+        <input type="text" id="todo_serial" required/>
+        <input type="submit" id="todo_delete" onclick=delToDo value="Del"/>
+    </form>
+    <br>
+
+    <script>
+        document.getElementById("todoForm").addEventListener("submit", addToDo);
+        document.getElementById("todoDeleteForm").addEventListener("submit", delToDo);
+
+
+        function addToDo() {
+            const item = document.forms["todoForm"]["todo_text"].value;
+            document.getElementById("todoForm").action = "/todos/add/" + item;
+            console.log("Action Value : " + document.getElementById("todoForm").action);
+        };
+
+        function delToDo() {
+            const item = document.forms["todoDeleteForm"]["todo_serial"].value;
+            console.log(item);
+            document.getElementById("todoDeleteForm").action = "/todos/del/" + item;
+            console.log("Action Value : " + document.getElementById("todoForm").action);
+        };
+    </script>
+</body>
+</html>
